@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<NewsModel>? _newsModel;
+  Future<NewsModel?>? _newsModel;
 
   @override
   void initState() {
@@ -30,7 +30,9 @@ class _HomePageState extends State<HomePage> {
           future: _newsModel,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(itemBuilder: (context, index) {
+              return ListView.builder(
+                  // itemCount: snapshot.data?.articles.length ?? 0,
+                  itemBuilder: (context, index) {
                 Container(
                   height: 100,
                   width: double.infinity,
@@ -40,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),
