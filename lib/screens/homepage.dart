@@ -29,20 +29,18 @@ class _HomePageState extends State<HomePage> {
         child:
         FutureBuilder(
           future: _newsModel,
-          child: ListView.builder(
-              // itemCount: .length,
-              itemBuilder: (context,index) {
-                Container(
-                  height: 100,
-                  width: double.infinity,
-                  color: Colors.red,
-                );
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+    return ListView.builder(
+    // itemCount: .length,
+    itemBuilder: (context,index) {
+    Container(
+    height: 100,
+    width: double.infinity,
+    color: Colors.red,
+    );
 
-              },
-          ),
-        ),
 
-      ),
-    );;
-  }
-}
+    };
+
+
