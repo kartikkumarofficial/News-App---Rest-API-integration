@@ -18,31 +18,69 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News App'),
+        title: const Text('News App'),
       ),
       body: Container(
-        child: FutureBuilder(
+        child: FutureBuilder<NewsModel?>(
           future: _newsModel,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData && snapshot.data != null) {
+              final articles = snapshot.data!.articles;
               return ListView.builder(
-                  // itemCount: snapshot.data?.articles.length ?? 0,
-                  itemBuilder: (context, index) {
-                Container(
-                  height: 100,
-                  width: double.infinity,
-                  color: Colors.red,
-                );
-              });
-            }
-
-            else {
-              return Center(child: CircularProgressIndicator());
+                itemCount: articles.length,
+                itemBuilder: (context, index) {
+                  final article = articles[index];
+                  return Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    height: 100,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        if (article.urlToImage != null &&
+                            article.urlToImage!.isNotEmpty)
+                          Image.network(
+                            article.urlToImage!,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          )
+                        else
+                          Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.grey,
+                            child: const Icon(Icons.image_not_supported),
+                          ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            article.title ?? 'No Title Available',
+                            style: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            } else {
+              return const Center(child: Text('No data available'));
             }
           },
         ),
