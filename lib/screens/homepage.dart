@@ -15,6 +15,18 @@ class _HomePageState extends State<HomePage> {
         title: Text('News App'),
       ),
       body:Container(
+        child:
+        ListView.builder(
+            // itemCount: .length,
+            itemBuilder: (context,index) {
+              Container(
+                height: 100,
+                width: double.infinity,
+                color: Colors.red,
+              );
+
+            },
+        ),
 
       ),
     );;
