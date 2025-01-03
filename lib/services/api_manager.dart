@@ -22,9 +22,9 @@ class API_Manager {
     } catch (e) {
       print('Error: $e');
     } finally {
-      client.close(); // Clean up the HTTP client
+      client.close();
     }
 
-    return newsModel; // Return the newsModel (null if there was an error)
+    return newsModel;
   }
 }
