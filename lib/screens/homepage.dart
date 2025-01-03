@@ -22,25 +22,29 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         title: Text('News App'),
       ),
-      body:Container(
-        child:
-        FutureBuilder(
+      body: Container(
+        child: FutureBuilder(
           future: _newsModel,
           builder: (context, snapshot) {
-            if(snapshot.hasData){
-    return ListView.builder(
-    // itemCount: .length,
-    itemBuilder: (context,index) {
-    Container(
-    height: 100,
-    width: double.infinity,
-    color: Colors.red,
+            if (snapshot.hasData) {
+              return ListView.builder(itemBuilder: (context, index) {
+                Container(
+                  height: 100,
+                  width: double.infinity,
+                  color: Colors.red,
+                );
+              });
+            }
+
+            else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
     );
-
-
-    };
-
-
+  }
+}
