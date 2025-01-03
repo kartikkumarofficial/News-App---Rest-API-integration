@@ -22,7 +22,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News App'),
+        title: Row(
+          children: [
+
+            Text('News App ',style: TextStyle(fontSize: 25,fontFeatures: [
+              FontFeature.enable('smcp'), // Enables small caps
+              FontFeature.enable('lnum'), // Enables lining numbers
+            ],),),
+            Icon(Icons.new_releases),
+          ],
+        ),
       ),
       body: Container(
         child: FutureBuilder<NewsModel?>(
